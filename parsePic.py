@@ -3,7 +3,6 @@
 import os, time
 import re, sys
 import hashlib
-import wget
 
 from WebUtility import getWebContent
 
@@ -63,13 +62,31 @@ def loadMd5List(folder):
     print "Remove:%d, Left:%d" % (removeCount, len(lstMd5Sum))
     return lstMd5Sum
 
+def getAllImages(folderPath, count, lstFolder):
+    if os.path.isfile(folderPath):
+        return count + 1
+
+    lstPath = os.listdir(folderPath)
+    for path in lstPath:
+        if os.path.isfile(path) and path.endswith(".jpg"):
+            count += 1
+        else:
+            count += getAllImages(os.path.join(folderPath, path), 0, lstFolder)
+    lstFolder.append((folderPath, count))
+    return count
+
+def showFolderImgCount(lstFolder):
+    lstFolder = sorted(lstFolder, key = lambda x : x[0])
+    for folderPath, count in lstFolder:
+       print "%s : %d" % (folderPath, count)
+
 if __name__ == '__main__':
     t = time.time()
 
     dicWebsites = {
         #OUTPUT + "/pornhub":"http://www.pornhub.com/",
         #OUTPUT + "/xnxx" : "http://www.xnxx.com/",
-        #OUTPUT + "/xnxx1" : "http://www.xnxx.com/home/1"
+        #OUTPUT + "/xnxx1" : "http://www.xnxx.com/home/1",
         }
 
     for i in xrange(0, 109):
@@ -84,4 +101,7 @@ if __name__ == '__main__':
         loadMd5List(folder)
 
     print "spend:%.2fs" % (time.time() - t)
-    print "Now we have %d images !!" % len(os.listdir("images"))
+    lstFolder = []
+    print "Now we have %d images !!" % getAllImages(OUTPUT, 0, lstFolder)
+
+    #showFolderImgCount(lstFolder)

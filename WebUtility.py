@@ -62,21 +62,3 @@ def getWebContent(url, encodeBig5 = True):
 	else:
 		#log ("[Err]%d is not exist" % stockNo)
 		return None
-
-def seleniumAutomation(url):
-	from selenium import webdriver
-	import time
-
-	driver = webdriver.Firefox()
-	driver.get(url)
-	time.sleep(1)
-
-	'''
-	elements = driver.find_elements_by_class_name('SwatchAnchor')
-
-	for element in elements:
-		element.click()
-		time.sleep(2)
-		print driver.find_element_by_class_name('bigPriceText1').text + driver.find_element_by_class_name('smallPriceText1').text
-	'''
-	driver.quit()
