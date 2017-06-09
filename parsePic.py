@@ -16,7 +16,7 @@ def checkFolder(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-def parseWebImages(targetUrl, folder, lstMd5Sum):
+def parseWebImages(targetUrl, folder):
     html = getWebContent(targetUrl, False)
     print "Get web page '%s' complete" % targetUrl
 
@@ -135,10 +135,9 @@ if __name__ == '__main__':
         pass
 
     for folder, url in dicWebsites.iteritems():
-        checkFolder(folder)
-        lstMd5Sum = loadMd5List(folder)
-        parseWebImages(url, folder, lstMd5Sum)
-        loadMd5List(folder)
+        checkFolder(folder) 		# Ensure folder exist
+        parseWebImages(url, folder) 	# Parse webpage and download images from parsed url
+        loadMd5List(folder) 		# Remove duplicated images
 
     print "spend:%.2fs" % (time.time() - t)
     lstFolder = []
