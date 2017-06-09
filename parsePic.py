@@ -128,7 +128,7 @@ if __name__ == '__main__':
         #OUTPUT + "/xnxx1" : "http://www.xnxx.com/home/1",
         }
 
-    for i in xrange(0, 1):
+    for i in xrange(0, 108):
         # http://multi.xnxx.com/p-2
         #http://www.xnxx.com/best/108/
         dicWebsites[OUTPUT + "/xnxx_best_v%d" % i] = "http://www.xnxx.com/best/%d/" % i
